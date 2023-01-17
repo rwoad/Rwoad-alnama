@@ -29,7 +29,7 @@
 	                
 	                <td  colspan="3" width="30%" class="text-center"><img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 150px;width: 150px; " alt="Logo"/></td>
 
-	                <td colspan="2" width="35%" class="text-right">
+	                <td colspan="2" width="35%" class="text-right" style="text-align:right !important">
 	                	<strong>
 	                		<span class="text-right arabic" style="padding-right:5px;" t-field="company.arabic_name"/></strong><br/>
 	                	<t t-if="company.street">
@@ -47,15 +47,15 @@
 	                </td>
 	            </tr>
 	        	<tr style="border:1pt solid grey;">
-	            	<td width="16%">‫‪ <span class="text-right" style="padding-left:5px;"/>CR No. : </td> 
-	            	<td width="16%"> <span class="text-center arabic" t-field="company.company_registry"/> ‫‪</td> 
-	            	<td width="17%"> <span class="text-right arabic" style="padding-right:-6px;">رقم السجل التجاري</span>‬</td>
+	            	<td width="16%"> <span class="text-right" style="padding-left:5px;"/>CR No. : </td>
+	            	<td width="16%"> <span class="text-center arabic" t-field="company.company_registry"/> </td>
+	            	<td width="17%"> <span class="text-right arabic" style="padding-right:-6px;">رقم السجل التجاري</span></td>
 
 	            	<td width="2%" style="border-left:1pt solid black;"></td>  
 
-	            	<td width="16%">‫‪ <span class="text-right" style="padding-left:5px;">VAT‬‬ No.: </span> </td>
-	            	<td width="16%"> <span class="text-center arabic" t-field="company.vat"/> ‫‪</td>
-	            	<td width="17%"> <span class="text-right arabic" style="padding-right:-6px;">ضريبة القيمة المضافة</span>‬</td>
+	            	<td width="16%"> <span class="text-right" style="padding-left:5px;">VAT No.: </span> </td>
+	            	<td width="16%"> <span class="text-center arabic" t-field="company.vat"/> </td>
+	            	<td width="17%"> <span class="text-right arabic" style="padding-right:-6px;">ضريبة القيمة المضافة</span></td>
 	            </tr>  
 	        </table>
         </div>
@@ -104,9 +104,9 @@
                         </div>
 			            <div class="col-4">
 			            	<p>
-			            		<strong>Invoice‬‬ ‫‪Number‬‬: </strong><span t-field="o.name"/><br/>
-			            		<strong>Invoice‬‬ Date: </strong><span t-field="o.invoice_date"/><br/>
-			            		‫<strong>‪Payment Terms‬: </strong><span t-field="o.invoice_payment_term_id"/><br/>
+			            		<strong>Invoice Number: </strong><span t-field="o.name"/><br/>
+			            		<strong>Invoice Date: </strong><span t-field="o.invoice_date"/><br/>
+			            		<strong>Payment Terms: </strong><span t-field="o.invoice_payment_term_id"/><br/>
 			            	</p>
 						</div>
                         <div class="col-2">
@@ -202,19 +202,19 @@
 							</tr>
 						</thead>
 					</table>
-					<table style="border:1pt solid grey;width:100%;color:black;margin-top:0px; color:black;" class="table table-bordered table-sm">
-						<thead>
-							<tr>
-								<td width="30%" style="font-weight: bold;background-color:#DCDCDC;">AMOUNT INVOICED</td>
-								<td class="text-right arabic" width="70%" style="padding-right:12px;" ><span t-esc="doc.amount_word(doc.amount_total)"/></td>
-							</tr>
-						</thead>
-					</table>
+<!--					<table style="border:1pt solid grey;width:100%;color:black;margin-top:0px; color:black;" class="table table-bordered table-sm">-->
+<!--						<thead>-->
+<!--							<tr>-->
+<!--								<td width="30%" style="font-weight: bold;background-color:#DCDCDC;">AMOUNT INVOICED</td>-->
+<!--								<td class="text-right arabic" width="70%" style="padding-right:12px;" ><span t-esc="doc.amount_word(doc.amount_total)"/></td>-->
+<!--							</tr>-->
+<!--						</thead>-->
+<!--					</table>-->
 <!--					<h6><span style="font-weight:bold;">Note:</span>Payment against all cash invoices will be valid only if customer have cash receipt voucher proof of payment. otherwise it will be considered as a credit invoice.</h6>-->
 					<div class="col-9" style="color:black; margin-top:20pt;">
 		                	<div class="row">
 								<div class="col-9" style=" font-weight:bold;">Received By:</div>
-	    						<div class="col-9" style="font-weight:bold;">Prepared‬‬ ‫‪By: </div>
+	    						<div class="col-9" style="font-weight:bold;">Prepared By: </div>
 	    					</div>
 	    					<br>
 	    					</br>
@@ -224,10 +224,10 @@
 								<div class="col-9" style=" font-weight:bold;">Signature:__________________</div>
 	    						<div class="col-9" style="font-weight:bold;">Signature:__________________</div>
 	    					</div>
-	    					<div class="row">
-								<div class="col-9" style=" font-weight:bold;">Stamp:</div>
-	    						<div class="col-9" style="font-weight:bold;">Stamp:</div>
-	    					</div>
+<!--	    					<div class="row">-->
+<!--								<div class="col-9" style=" font-weight:bold;">Stamp:</div>-->
+<!--	    						<div class="col-9" style="font-weight:bold;">Stamp:</div>-->
+<!--	    					</div>-->
 	    				</div>
 					</div>
 				</div>

@@ -27,7 +27,7 @@
     'author': 'Kanak Infosystems LLP.',
     'website': 'https://www.kanakinfosystems.com',
     'license': 'OPL-1',
-    'depends': ['account','l10n_sa'],
+    'depends': ['account'],
     'data': [
         'report/vat_invoice_report_print.xml',
         'report/vat_report_action_call.xml',

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<template id="external_layout_seti">
+	<template id="external_layout_seti2">
 		<t t-if="o and 'company_id' in o">
         <t t-set="company" t-value="o.company_id"/>
     	</t>
@@ -81,8 +81,8 @@
         </div>
 	</template>
 
-	<template id="report_tax_invoice_document">
-		<t t-call="saudi_einvoice_knk.external_layout_seti">
+	<template id="report_sale_order_document">
+		<t t-call="saudi_einvoice_knk.external_layout_seti2">
 			<t t-foreach="doc" t-as="o">
         		<t t-set="o" t-value="o.with_context(lang='en_US')"/>
 				<div class="page" style="direction: ltr !important">
@@ -94,28 +94,28 @@
 					<table style="border:1pt solid grey;width:100%;
     height: 23px;color:black; margin-top:10pt;" class="table-condensed table-sm">
 							<tr>
-								<td style="padding:1pt;margin:0pt;font-weight: bold;text-align:center;background-color:#DCDCDC;"><span class="text-right arabic">Tax Invoice / فاتورة ضريبية </span></td>
+								<td style="padding:1pt;margin:0pt;font-weight: bold;text-align:center;background-color:#DCDCDC;"><span class="text-right arabic">Quotation / عرض سعر </span></td>
 							</tr>
 					</table>
 			        <div class="row">
-                        <div name="invoice_address" class="col-6">
-                            <address t-field="o.partner_id"
-                                t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
-                            <div t-if="o.partner_id.vat" class="mt16"><t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="o.partner_id.vat"/></div>
-                        </div>
+<!--                        <div name="invoice_address" class="col-6">-->
+<!--                            <address t-field="o.partner_id"-->
+<!--                                t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />-->
+<!--                            <div t-if="o.partner_id.vat" class="mt16"><t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="o.partner_id.vat"/></div>-->
+<!--                        </div>-->
 			            <div class="col-4">
 			            	<p>
-			            		<strong>Invoice Number: </strong><span t-field="o.name"/><br/>
-			            		<strong>Invoice Date: </strong><span t-field="o.invoice_date"/><br/>
-			            		<strong>Payment Terms: </strong><span t-field="o.invoice_payment_term_id"/><br/>
+			            		<strong>Quotation Number: </strong><span t-field="o.name"/><br/>
+			            		<strong>Quotation Date: </strong><span t-field="o.date_order"/><br/>
+			            		<strong>Payment Terms: </strong><span t-field="o.payment_term_id"/><br/>
 			            	</p>
 						</div>
                         <div class="col-2">
 			                <!-- <img t-att-src="'data:image/png;base64,%s' % to_text(doc.get_qr_code())"
 			                    style="width: 120px;height:120px;" alt="Barcode"/> -->
-                    <img t-if="o.l10n_sa_qr_code_str"
-                         style="display:block;"
-                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 130, 130)"/>
+<!--                    <img t-if="o.l10n_sa_qr_code_str"-->
+<!--                         style="display:block;"-->
+<!--                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 130, 130)"/>-->
 			            </div>
                     </div>
 					<table style="border:1pt solid grey;width:100%;color:black; margin-top:0pt; color:black;" class="table-condensed">
@@ -134,23 +134,23 @@
 					 	<t t-set="tax_total" t-value="0"/>
 					 	<t t-set="discount_total" t-value="0"/>
 						<tbody class="invoice_tbody">
-						 	<tr t-foreach="o.invoice_line_ids" t-as="l">
+						 	<tr t-foreach="o.order_line" t-as="l">
 						 		<t t-set="line_tax_total" t-value="0"/>
-					 			<t t-foreach="l.tax_ids" t-as="t">
+					 			<t t-foreach="l.tax_id" t-as="t">
 					 				<t t-set="tax_total" t-value="tax_total + l.price_subtotal* t.amount/100"/>
 					 				<t t-set="line_tax_total" t-value="line_tax_total + t.amount"/>
 					 			</t>
-					 			<t t-set="discount_total" t-value="discount_total + ((l.price_unit * l.quantity) - l.price_subtotal)"/>
+					 			<t t-set="discount_total" t-value="discount_total + ((l.price_unit * l.product_uom_qty) - l.price_subtotal)"/>
 						 		<td style="border-right:1pt solid grey;padding:3pt">
-						 			<span t-field="l.name"/> -
-						 			<!-- <span class="text-right arabic" t-esc="doc.get_product_arabic_name(l.product_id.id)"/> -->
+						 			<span t-field="l.name"/>
+						 			<!-- - <span class="text-right arabic" t-esc="doc.get_product_arabic_name(l.product_id.id)"/> -->
 						 			<br/>
 						 		</td>
 						 		<td style="border-right:1pt solid grey;text-align:right;padding:3pt"><span t-field="l.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-						 		<td style="border-right:1pt solid grey;text-align:center;padding:3pt"><span t-esc="'%.2f %s '%(l.quantity,l.product_uom_id.name)"/></td>
+						 		<td style="border-right:1pt solid grey;text-align:center;padding:3pt"><span t-esc="'%.2f %s '%(l.product_uom_qty,l.product_uom.name)"/></td>
 
 					 			<td style="padding:3pt;border-right:1pt solid grey;text-align:right;">
-						 			<sapn t-esc="l.price_unit * l.quantity" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+						 			<sapn t-esc="l.price_unit * l.product_uom_qty" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
 						 		</td>
 
 						 		<td style="border-right:1pt solid grey;text-align:right;padding:3pt;"  >
@@ -158,10 +158,10 @@
 	                             </td>
 
 						 		<td style="border-right:1pt solid grey;padding:2pt;text-align:center;">
-						 			<t t-foreach="l.tax_ids" t-as="t">
+						 			<t t-foreach="l.tax_id" t-as="t">
 						 				<span t-esc="'%.2f'%(t.amount)"/> %
 					 				</t>
-					 				<span t-if="not l.tax_ids">0.0 %</span>
+					 				<span t-if="not l.tax_id">0.0 %</span>
 						 		</td>
 						 		<td style="padding:3pt;border-right:1pt solid grey;text-align:right;">
 						 			<t t-set="line_tax_total" t-value="l.price_subtotal*line_tax_total/100"/>
@@ -199,7 +199,7 @@
 							<tr>
 								<td class="" style="font-weight: bold;border-right:1pt solid grey;text-align:left;padding:3pt">Total Amount Due</td>
 								<td class="text-end arabic" style="border-right:1pt solid grey;text-align:right;padding:3pt">إجمالي المبلغ المستحق</td>
-								<td style="border-right:1pt solid grey;text-align:right;padding:3pt" class="text-end"><span t-esc="doc.amount_residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+								<td style="border-right:1pt solid grey;text-align:right;padding:3pt" class="text-end"><span t-esc="doc.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
 							</tr>
 						</thead>
 					</table>
@@ -212,12 +212,12 @@
 <!--						</thead>-->
 <!--					</table>-->
 <!--					<h6><span style="font-weight:bold;">Note:</span>Payment against all cash invoices will be valid only if customer have cash receipt voucher proof of payment. otherwise it will be considered as a credit invoice.</h6>-->
-					<table class="table table-bordered">
-						<b5>IBan</b5>
-						<t t-foreach="o.bank_info_ids" t-as="bank">
-							<tr><td><span t-field="bank.name"/></td></tr>
-						</t>
-					</table>
+<!--					<table class="table table-bordered">-->
+<!--						<b5>IBan</b5>-->
+<!--						<t t-foreach="o.bank_info_ids" t-as="bank">-->
+<!--							<tr><td><span t-field="bank.name"/></td></tr>-->
+<!--						</t>-->
+<!--					</table>-->
 					<div class="col-9" style="color:black; margin-top:20pt;">
 		                	<div class="row">
 								<div class="col-9" style=" font-weight:bold;">Received By:</div>
@@ -242,11 +242,11 @@
 		</t>
 	</template>
 
-	<template id="report_tax_invoice">
+	<template id="report_sale_order_template">
 	    <t t-call="web.html_container">
 	        <t t-foreach="docs" t-as="doc">
         		<t t-set="doc" t-value="doc.with_context(lang='en_US')"/>
-	            <t t-call="saudi_einvoice_knk.report_tax_invoice_document"/>
+	            <t t-call="saudi_einvoice_knk.report_sale_order_document"/>
 	        </t>
 	    </t>
 	</template>

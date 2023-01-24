@@ -8,6 +8,11 @@
             <xpath expr="//field[@name='invoice_date']" position="after">
                 <field name="invoice_date_supply"/>
             </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="IBan">
+                    <field name="bank_info_ids" nolabel="1"/>
+                </page>
+            </xpath>
         </field>
     </record>
 

@@ -7,10 +7,17 @@ from num2words import num2words
 from odoo import api, fields, models, _
 
 
+class BankIbanInfo(models.Model):
+    _name = 'bank.iban.info'
+
+    name = fields.Text('Name')
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
     invoice_date_supply = fields.Datetime('Date Of Supply')
+
+    bank_info_ids = fields.Many2many('bank.iban.info', string='Bank Info')
 
     def action_invoice_tax_report(self, type):
         self.ensure_one()

@@ -9,7 +9,7 @@
                 <attribute name="class">mt-0</attribute>
             </xpath>
             <xpath expr="//table[@name='invoice_line_table']" position="attributes">
-                <attribute name="dir">ltr</attribute>
+                <attribute name="dir">rtl</attribute>
             </xpath>
         </template>
 

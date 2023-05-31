@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+
+            <xpath expr="//div[hasclass('mt-5')]" position="attributes">
+                <attribute name="class">mt-0</attribute>
+            </xpath>
+        </template>
+
+        <template id="l10n_gcc_invoice_report_invoice_document_inherit"
+                  inherit_id="l10n_gcc_invoice.arabic_english_invoice">
+
+            <xpath expr="//table[@name='invoice_line_table']" position="attributes">
+                <attribute name="dir">rtl</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='invoice_date']" position="replace">
+                <div class="row" t-if="o.invoice_date" name="invoice_date">
+                    <div class="col-2 text-start">
+                        <strong style="white-space:nowrap">Invoice Date:
+                        </strong>
+                    </div>
+                    <div class="col-2">
+                        <span t-field="o.invoice_date"/>
+                    </div>
+                    <div class="col-2 text-end">
+                        <strong style="white-space:nowrap">:
+                            تاريخ الفاتورة
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='due_date']" position="replace">
+                <div class="row"
+                     t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'"
+                     name="due_date">
+                    <div class="col-2 text-start">
+                        <strong style="white-space:nowrap">Due Date:
+                        </strong>
+                    </div>
+                    <div class="col-2">
+                        <span t-field="o.invoice_date_due"/>
+                    </div>
+                    <div class="col-2 text-end">
+                        <strong style="white-space:nowrap">:
+                            تاريخ الاستحقاق
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='origin']" position="replace">
+                <div class="row" t-if="o.invoice_origin" name="origin">
+                    <div class="col-2 text-start">
+                        <strong style="white-space:nowrap">Source:
+                        </strong>
+                    </div>
+                    <div class="col-2">
+                        <span t-field="o.invoice_origin"/>
+                    </div>
+                    <div class="col-2 text-end">
+                        <strong style="white-space:nowrap">:
+                            المصدر
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='customer_code']" position="replace">
+                <div class="row" t-if="o.partner_id.ref" name="customer_code">
+                    <div class="col-2 text-start">
+                        <strong style="white-space:nowrap">:
+                            Customer Code
+                        </strong>
+                    </div>
+                    <div class="col-2">
+                        <span t-field="o.partner_id.ref"/>
+                    </div>
+                    <div class="col-2 text-end">
+                        <strong style="white-space:nowrap">:
+                            كود العميل
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='reference']" position="replace">
+                <div class="row" t-if="o.ref" name="reference">
+                    <div class="col-2 text-start">
+                        <strong style="white-space:nowrap">Reference:
+                        </strong>
+                    </div>
+                    <div class="col-2">
+                        <span t-field="o.ref"/>
+                    </div>
+                    <div class="col-2 text-end">
+                        <strong style="white-space:nowrap">:
+                            رقم الإشارة
+                        </strong>
+                    </div>
+                </div>
+
+            </xpath>
+
+            <xpath expr="//div[@name='delivery_date']" position="replace">
+                <div class="row" t-if="o.l10n_sa_delivery_date" name="delivery_date">
+                    <div class="col-2 text-start">
+                        <strong style="white-space:nowrap">Delivery Date:
+                        </strong>
+                    </div>
+                    <div class="col-2">
+                        <span t-field="o.l10n_sa_delivery_date"/>
+                    </div>
+                    <div class="col-2 text-end">
+                        <strong style="white-space:nowrap">:
+                            تاريخ التوصيل
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[9]" position="attributes">
+                <attribute name="class">text-center</attribute>
+            </xpath>
+
+            <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
+                <td name="account_invoice_line_name" class="text-end">
+                    <t t-if="line.product_id">
+                        <t t-set="arabic_name" t-value="line.with_context(lang='ar_001').product_id.display_name"/>
+                        <t t-set="english_name" t-value="line.with_context(lang='en_US').product_id.display_name"/>
+
+<!--                        <span t-out="line.with_context(lang='ar_001').product_id.name"-->
+<!--                              t-options="{'widget': 'text'}"/>-->
+
+<!--                        <t t-if="arabic_name != english_name">-->
+<!--                            <br/>-->
+<!--                            <span t-field="line.product_id.display_name"-->
+<!--                                  t-options="{'widget': 'text'}"/>-->
+<!--                        </t>-->
+
+<!--                        <t t-if="line.name != english_name and line.name != arabic_name">-->
+<!--                            <br/>-->
+                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+<!--                        </t>-->
+                    </t>
+                    <t t-else="">
+                        <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                    </t>
+                </td>
+            </xpath>
+        </template>
+
+        <template id="external_layout_standard_inherit" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[contains(@t-attf-class,'header o_company_#{company.id}_layout')]" position="attributes">
+                <attribute name="dir">ltr</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('pt-5')]" position="attributes">
+                <attribute name="class">pt-0</attribute>
+            </xpath>
+        </template>
+    </data>
+</odoo>
